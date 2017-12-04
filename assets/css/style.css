@@ -10,14 +10,15 @@
 :root {
   --background-color: transparent;
   --header-color: transparent;
-  --header-font-color: #bbb;
+  --header-font-color: #000;
   --footer-color: #333;
   --footer-font-color: #999;
   --panel-color: transparent;
+  --button-color: #fff;
   --border-color: red;
-  --main-font-color: #bbb;
+  --main-font-color: #000;
   --sidebar-color: transparent;
-  --sidebar-font-color:#bbb;
+  --sidebar-font-color:#000;
   --plain-font: Futura, "Trebuchet MS", Arial, sans-serif;
   --styled-font: 'starWarsFont', 'Arial', Helvetica, sans-serif;
   --styled-font-color: gold;
@@ -52,7 +53,7 @@ html {
   background-image: url("../images/star_wars_background.jpg");
 }
 
-er {
+.wrapper {
   max-width: 85rem; /* equates to 1360px with default font of 16px */
   margin: 0 auto;
   background-color: var(--background-color);
@@ -100,7 +101,7 @@ header h2 {
   color: var(--styled-font-color);
   font-weight: lighter;
   letter-spacing: 1.0px;
-  text-shadow: 1px 1px 4px #111;
+  /*text-shadow: 1px 1px 4px #111;*/
 }
 
 
@@ -162,7 +163,7 @@ hr {
 }
 
 button {
-    background-color: var(--panel-color);
+    background-color: var(--button-color);
     border: 2px solid #444;
     border-radius: 1rem;
     padding: 1rem 2rem;
@@ -171,7 +172,7 @@ button {
     text-align: center;
     font: inherit;
     color: inherit;
-    text-shadow: 4px 4px 3px #222;
+    /*text-shadow: 4px 4px 3px #222;*/
     cursor: pointer;
 }
 
@@ -219,7 +220,7 @@ main {
 }
 
 main img, #ally img, #foe img {
-  width: 100%;
+  width: 125px;
 }
 
 /*--- Ally and Foe ---*/
@@ -304,7 +305,7 @@ footer {
   }
 
   main .img {
-    width: calc(100% / 6);
+    width: calc(100% / 3);
   }
 
   #allyBox, #foeBox {

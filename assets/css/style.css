@@ -8,18 +8,18 @@
 /*--- Theme Variables ---*/
 
 :root {
-  --background-color: #222;
-  --header-color: #333;
+  --background-color: transparent;
+  --header-color: transparent;
   --header-font-color: #bbb;
   --footer-color: #333;
   --footer-font-color: #999;
-  --panel-color: #333;
+  --panel-color: transparent;
   --border-color: red;
   --main-font-color: #bbb;
-  --sidebar-color: #222;
+  --sidebar-color: transparent;
   --sidebar-font-color:#bbb;
   --plain-font: Futura, "Trebuchet MS", Arial, sans-serif;
-  --styled-font: 'turtleFont', 'Arial', Helvetica, sans-serif;
+  --styled-font: 'starWarsFont', 'Arial', Helvetica, sans-serif;
   --styled-font-color: gold;
 }
 
@@ -40,6 +40,7 @@ html {
   overflow-y: scroll;
   font-size: 1.0em; /* my fonts will scale as a multiplier of the user's browser default */
   font-family: var(--plain-font);
+
 }
 
 .container {
@@ -48,9 +49,10 @@ html {
   display: flex;
   flex-direction: column;
   min-height: 100%;
+  background-image: url("../images/star_wars_background.jpg");
 }
 
-.wrapper {
+er {
   max-width: 85rem; /* equates to 1360px with default font of 16px */
   margin: 0 auto;
   background-color: var(--background-color);
@@ -199,6 +201,7 @@ main {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
+
 }
 
 .img {
@@ -301,7 +304,7 @@ footer {
   }
 
   main .img {
-    width: calc(100% / 3);
+    width: calc(100% / 6);
   }
 
   #allyBox, #foeBox {

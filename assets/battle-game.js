@@ -2,14 +2,14 @@
 
 
 
-var allyReady, foeReady, charID, allyIndex, foeIndex, names, chars, images, maxHealths, attackPowers, counterPowers, chars, round;
+var allyReady, foeReady, charID, allyIndex, foeIndex, names, players, images, maxHealths, attackPowers, counterPowers, players, round;
 
 $(document).ready(function() {
     setup();
 });
 
 function setup() {
-        chars = [];
+        players = [];
 
         names = ['Han Solo', 'Leia', 'Obi Wan',
         'Yoda', 'Boba Fett', 'Storm Trooper'];
@@ -31,13 +31,17 @@ function setup() {
 
         allyReady = true; //ready to select ally
 
-        $('#message').html('Who will be your Ally?');
+        $('#message').html('Who will be your character?');
+
+         $('#restart button').prop("disabled", true).hide();
+         $('#attack button').hide();
+
 }
 
 function charGen() {
-    //populate each index of 'chars' with info about the character
+    //populate each index of 'players' with info about the character
     $.each(names, function(i) {
-        chars[i] = {
+        players[i] = {
             index: i,
             id: 'char' + i,
             name: names[i],
@@ -53,9 +57,9 @@ function charGen() {
         //create a div to hold character image and name
         $('#arena').append(
             '<div id="char' + i + '" class="img" onClick="clicked(this.id);">'
-                + '<img src="assets/images/chars/' + chars[i].image + '" class="charImg" >'
-                + '<div>' + chars[i].name + '</div><div>' + chars[i].health
-                + ' hp</div><div>' + chars[i].attackPower
+                + '<img src="assets/images/players/' + players[i].image + '" class="charImg" >'
+                + '<div>' + players[i].name + '</div><div>' + players[i].health
+                + ' hp</div><div>' + players[i].attackPower
                 + ' attack</div></div>'
         );
     });
@@ -80,14 +84,14 @@ function chooseAlly() {
     //create div for ally character image
     $('#ally').html(
     '<div class="img">'
-        + '<img src="assets/images/chars/' + chars[allyIndex].image + '">'
-        + '<div>' + chars[allyIndex].name + '</div>'
+        + '<img src="assets/images/players/' + players[allyIndex].image + '">'
+        + '<div>' + players[allyIndex].name + '</div>'
         + '</div>'
     );
 
     //populate title with character's max health
     $('#allyTitle').text(
-    'Ally  -  ' + chars[allyIndex].maxHealth + ' HP max'
+    'Ally  -  ' + players[allyIndex].maxHealth + ' HP max'
     );
 
     //remove character from arena
@@ -105,7 +109,7 @@ function chooseFoeReady() {
     round++;
 
     //choose foe on click of character image
-    $('#message').html('Round ' + round + ': Who will your Ally fight?');
+    $('#message').html('Round ' + round + ': Who will you fight?');
     foeReady = true;
 }
 
@@ -116,14 +120,14 @@ function chooseFoe() {
     //create div for foe character image
     $('#foe').html(
     '<div class="img">'
-        + '<img src="assets/images/chars/' + chars[foeIndex].image + '">'
-        + '<div>' + chars[foeIndex].name + '</div>'
+        + '<img src="assets/images/players/' + players[foeIndex].image + '">'
+        + '<div>' + players[foeIndex].name + '</div>'
         + '</div>'
     );
 
     //populate title with character's max health
     $('#foeTitle').text(
-    'Foe  -  ' + chars[foeIndex].maxHealth + ' HP max'
+    'Foe  -  ' + players[foeIndex].maxHealth + ' HP max'
     );
 
     //remove character from arena
@@ -138,24 +142,25 @@ function chooseFoe() {
 
 function refreshHP() {
     //get ally remaining health in percent and update hp bar
-    var percent = (chars[allyIndex].health / chars[allyIndex].maxHealth)*100
+    var percent = (players[allyIndex].health / players[allyIndex].maxHealth)*100
         + '%';
     $('#allyHP').css('width', percent);
 
 
     //get foe remaining health in percent and update hp bar
-    percent = (chars[foeIndex].health / chars[foeIndex].maxHealth)*100 + '%';
+    percent = (players[foeIndex].health / players[foeIndex].maxHealth)*100 + '%';
     $('#foeHP').css('width', percent);
 }
 
 function startGame() {
     //enable attack button
-    $('#attack button').prop("disabled", false);
+    $('#attack button').prop("disabled", false).show();
 
+    $('#restart button').prop("disabled", false).show();
     //alert user to attack or quit
-    $('#message').text(chars[allyIndex].name  + ' can attack '
-        + chars[foeIndex].name
-        + ' or run away.');
+    $('#message').text(players[allyIndex].name  + ' can attack '
+        + players[foeIndex].name
+        + ' or Restart.');
 }
 
 function attack() {
@@ -163,17 +168,17 @@ function attack() {
     $('#attack button').prop("disabled", true);
 
     //temp variable to hold original attack power / damage done
-    var damage = chars[allyIndex].attackPower;
+    var damage = players[allyIndex].attackPower;
 
     //takes health from foe
-    chars[foeIndex].health = chars[foeIndex].health
+    players[foeIndex].health = players[foeIndex].health
         - damage;
     //increases ally attack power
-    chars[allyIndex].attackPower = damage
-        + chars[allyIndex].initAttackPower;
+    players[allyIndex].attackPower = damage
+        + players[allyIndex].initAttackPower;
 
     //alert user of damage done
-    $('#message').text(chars[allyIndex].name  + ' attacked for '
+    $('#message').text(players[allyIndex].name  + ' attacked for '
         + damage + ' damage.');
 
     refreshHP();
@@ -184,16 +189,16 @@ function attack() {
 
 function counter() {
     //temp variable to hold original attack power / damage done
-    var damage = chars[foeIndex].attackPower;
+    var damage = players[foeIndex].attackPower;
 
     //takes health from foe
-    chars[allyIndex].health = chars[allyIndex].health
+    players[allyIndex].health = players[allyIndex].health
         - damage;
 
     //no increase in foe attack power
 
     //alert user of damage done
-    $('#message').append('<br>' + chars[foeIndex].name  + ' countered for '
+    $('#message').append('<br>' + players[foeIndex].name  + ' countered for '
         + damage + ' damage.');
 
     refreshHP();
@@ -204,29 +209,29 @@ function counter() {
 
 function checkWin() {
     //if ally and foe health are both depleted...
-    if (chars[allyIndex].health < 1 && chars[foeIndex].health < 1) {
+    if (players[allyIndex].health < 1 && players[foeIndex].health < 1) {
 
         //display negative healths as zero
-        chars[foeIndex].health = chars[allyIndex].health = 0;
+        players[foeIndex].health = players[allyIndex].health = 0;
 
         //the game is a draw
         draw();
     }
 
     //if ally health depleted...
-    else if (chars[allyIndex].health < 1) {
+    else if (players[allyIndex].health < 1) {
 
         //display negative health as zero
-        chars[foeIndex].health = 0;
+        players[foeIndex].health = 0;
 
         //ally is defeated
         defeat();
     }
 
     //if foe health is depleted...
-    else if (chars[foeIndex].health < 1) {
+    else if (players[foeIndex].health < 1) {
         //display negative health as zero
-        chars[foeIndex].health = 0;
+        players[foeIndex].health = 0;
 
         refreshHP();
 
@@ -250,7 +255,7 @@ function newFoe () {
     $('#foeTitle').text('Foe - Defeated');
 
     //if all characters are not defeated...
-    if (round < chars.length - 1) {
+    if (round < players.length - 1) {
         //choose another foe
         chooseFoeReady();
     }

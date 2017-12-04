@@ -8,20 +8,21 @@
 /*--- Theme Variables ---*/
 
 :root {
-  --background-color: transparent;
-  --header-color: transparent;
-  --header-font-color: #000;
-  --footer-color: #333;
-  --footer-font-color: #999;
-  --panel-color: transparent;
-  --button-color: #fff;
-  --border-color: red;
-  --main-font-color: #000;
-  --sidebar-color: transparent;
-  --sidebar-font-color:#000;
   --plain-font: Futura, "Trebuchet MS", Arial, sans-serif;
   --styled-font: 'starWarsFont', 'Arial', Helvetica, sans-serif;
   --styled-font-color: gold;
+  --background-color: transparent;
+  --header-color: transparent;
+  --footer-color: transparent;
+  --panel-color: transparent;
+  --button-color: #fff;
+  --border-color: red;
+  --sidebar-font-color:#000;
+  --header-font-color: #000;
+  --main-font-color: #000;
+  --footer-font-color: #000;
+
+  --sidebar-color: transparent;
 }
 
 /*--- Box Sizing Hack ---*/
@@ -39,7 +40,7 @@ html {
   background-color: var(--background-color);
   height: 100vh;
   overflow-y: scroll;
-  font-size: 1.0em; /* my fonts will scale as a multiplier of the user's browser default */
+  font-size: 1.0em;
   font-family: var(--plain-font);
 
 }
@@ -157,7 +158,7 @@ hr {
 
 #message {
   width: 100%;
-  min-height: 4rem;
+  min-height: 2rem;
   text-align: center;
   text-shadow: 1px 1px 4px #222;
 }
